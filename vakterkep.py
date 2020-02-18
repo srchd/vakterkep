@@ -10,6 +10,8 @@ class WelcomeWindow:
         self.label = Label(master, text="Vaktérképek: ")
         self.label.pack()
 
+
+
         self.var = IntVar()
         self.swiss = Radiobutton(master, text="Svájc <3", variable=self.var, value=1)
         self.swiss.pack(anchor=W)
