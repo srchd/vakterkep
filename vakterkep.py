@@ -2,6 +2,10 @@ import pygame
 import os
 from tkinter import *
 
+class Germany:
+    def __init__(self, win):
+        self.win = win
+
 class WelcomeWindow:
     def __init__(self, master):
         self.master = master
