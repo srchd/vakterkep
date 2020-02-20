@@ -2,23 +2,19 @@ import pygame
 import os
 from tkinter import *
 
+pygame.init()
 
-
-class Swiss:
-    def __init__(self):
-        pygame.init()
-        self.width = 500
-        self.height = 324
+class Countries:
+    def __init__(self, width, height, img):
+       # pygame.init()
+        self.width = width
+        self.height = height
+        self.img = img
         self.win = pygame.display.set_mode((self.width, self.height))
-        self.bg = pygame.image.load(os.path.join("assets","schweiz.jpg"))
+        self.bg = pygame.image.load(os.path.join("assets",self.img))
 
         self.win.blit(self.bg,(0,0))
         pygame.display.update()
-
-
-class Germany:
-    def __init__(self, win):
-        self.win = win
 
 class WelcomeWindow:
     def __init__(self, master):
@@ -50,7 +46,13 @@ class WelcomeWindow:
         #print(self.var.get())
         if self.var.get() == 1:
             self.master.destroy()
-            Swiss()
+            swiss = Countries(500, 324, "schweiz.jpg")
+        elif self.var.get() == 2:
+            self.master.destroy()
+            austria = Countries(1152, 648, "oesterreich.png")
+        elif self.var.get() == 3:
+            self.master.destroy()
+            germany = Countries(682, 862, "deutschland.png")
 
 def main():
         root = Tk()
