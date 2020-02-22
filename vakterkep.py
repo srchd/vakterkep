@@ -46,20 +46,20 @@ class WelcomeWindow:
     def confirm(self):
         self.width = 1152
         self.height = 648
-        choice = self.var.get()
+        #choice = self.var.get()
         #print(self.var.get())
         if self.var.get() == 1:
             self.master.destroy()
             #500, 324
-            swiss = Countries(self.width,self.height , "schweiz.jpg")
+            #swiss = Countries(self.width,self.height , "schweiz.jpg")
         elif self.var.get() == 2:
             self.master.destroy()
             #1152, 648
-            austria = Countries(self.width, self.height, "oesterreich.png")
+            #austria = Countries(self.width, self.height, "oesterreich.png")
         elif self.var.get() == 3:
             self.master.destroy()
             #682, 862
-            germany = Countries(682, 780, "deutschland.png")
+            #germany = Countries(682, 780, "deutschland.png")
         else:
             print("Nem valasztottal orszagot!")
 
@@ -71,16 +71,39 @@ def main():
 
         run = True
 
+        choice = mygui.var.get()
+ 
+        if choice == 1:
+            width = 1152
+            height = 648
+
+            country = Countries(width, height, "schweiz.jpg")
+        elif choice == 2:
+            width = 1152
+            height = 648
+
+            country = Countries(width, height, "oesterreich.png")
+
+        elif choice == 3:
+            width = 682
+            height = 780
+
+            country = Countries(width, height, "deutschland.png")
+
+        RED = (255, 0, 0)
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
+                    #mouse_clicks.add(pygame.mouse.get_pos())
                     print(mygui.var.get())
-            if mygui.var.get() != 0:
-                pygame.display.update()
-            else:
+                    posx, posy = pygame.mouse.get_pos()
+                    pygame.draw.circle(country.win, RED, (posx, posy), 5, 0)
+
+            if choice == 0:
                 run = False
+            pygame.display.update()
         pygame.quit()
 
 if __name__ == '__main__':
