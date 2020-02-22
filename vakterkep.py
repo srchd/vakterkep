@@ -12,6 +12,7 @@ class Countries:
         self.img = img
         self.win = pygame.display.set_mode((self.width, self.height))
         self.bg = pygame.image.load(os.path.join("assets",self.img))
+        self.bg = pygame.transform.scale(self.bg,(self.width, self.height))
 
         self.win.blit(self.bg,(0,0))
         pygame.display.update()
@@ -43,16 +44,24 @@ class WelcomeWindow:
         self.confirm_button.pack()
 
     def confirm(self):
+        self.width = 1152
+        self.height = 648
+        choice = self.var.get()
         #print(self.var.get())
         if self.var.get() == 1:
             self.master.destroy()
-            swiss = Countries(500, 324, "schweiz.jpg")
+            #500, 324
+            swiss = Countries(self.width,self.height , "schweiz.jpg")
         elif self.var.get() == 2:
             self.master.destroy()
-            austria = Countries(1152, 648, "oesterreich.png")
+            #1152, 648
+            austria = Countries(self.width, self.height, "oesterreich.png")
         elif self.var.get() == 3:
             self.master.destroy()
-            germany = Countries(682, 862, "deutschland.png")
+            #682, 862
+            germany = Countries(682, 780, "deutschland.png")
+        else:
+            print("Nem valasztottal orszagot!")
 
 def main():
         root = Tk()
@@ -66,7 +75,12 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-            pygame.display.update()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    print(mygui.var.get())
+            if mygui.var.get() != 0:
+                pygame.display.update()
+            else:
+                run = False
         pygame.quit()
 
 if __name__ == '__main__':
