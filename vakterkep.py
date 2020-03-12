@@ -17,6 +17,14 @@ class Countries:
         self.win.blit(self.bg,(0,0))
         pygame.display.update()
 
+
+    # majd tárolva így lesznek: város-cpos-minpos-maxpos
+    def correct(self, city, pos, cpos):
+        if pos >= (45, 361) and pos <= (60, 376):
+            pygame.draw.circle(self.win, (0,255,0), cpos, 5, 0)
+        else:
+            print("Nopie")
+
 class WelcomeWindow:
     def __init__(self, master):
         self.master = master
@@ -91,15 +99,18 @@ def main():
             country = Countries(width, height, "deutschland.png")
 
         RED = (255, 0, 0)
+        GREEN = (0, 255, 0)
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    #mouse_clicks.add(pygame.mouse.get_pos())
-                    print(mygui.var.get())
-                    posx, posy = pygame.mouse.get_pos()
-                    pygame.draw.circle(country.win, RED, (posx, posy), 5, 0)
+                    # orszag vizsgalata utan szetszedni (au, sch, de)
+                    #print(mygui.var.get())
+                    #print(posx, posy)
+                    pos = pygame.mouse.get_pos()
+                    country.correct("Bregenz", pos, (54,371))
+                    #pygame.draw.circle(country.win, RED, pos, 5, 0)
 
             if choice == 0:
                 run = False
