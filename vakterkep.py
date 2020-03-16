@@ -1,6 +1,8 @@
 import pygame
 import os
 from tkinter import *
+from collections import namedtuple
+import random
 
 pygame.init()
 
@@ -19,11 +21,6 @@ class Countries:
 
 
     # majd tárolva így lesznek: város-cpos-minpos-maxpos
-    def correct(self, city, pos, cpos):
-        if pos >= (45, 361) and pos <= (60, 376):
-            pygame.draw.circle(self.win, (0,255,0), cpos, 5, 0)
-        else:
-            print("Nopie")
 
 class WelcomeWindow:
     def __init__(self, master):
@@ -71,6 +68,18 @@ class WelcomeWindow:
         else:
             print("Nem valasztottal orszagot!")
 
+#oe_cities = namedtuple("oe_cities", "city cpos minpos maxpos")
+oe_cities = [
+                [["Vorarlberg - Bregenz"], [(54, 371)], [(44,361)], [(64,381)]],
+                [["Tirol – Innsbruck"], [(272,425)], [(262,415)], [(282,435)]]
+            ]
+
+def is_correct(pos, min_pos, max_pos):
+    if pos >= min_pos and pos <= max_pos:
+        return True
+    else:
+        return False
+
 def main():
         root = Tk()
         mygui = WelcomeWindow(root)
@@ -100,18 +109,29 @@ def main():
 
         RED = (255, 0, 0)
         GREEN = (0, 255, 0)
+        BLACK = (0, 0, 0)
+        r = random.SystemRandom()
+        city = r.choice(range(2))
+        font = pygame.font.Font(os.path.join("assets","LEMONMILK-Medium.otf"), 32)
+        text = font.render(oe_cities[city][0][0], True, BLACK)
+        textRect = text.get_rect()
+        textRect.center = (country.width / 2, 20)
         while run:
+            country.win.blit(text, textRect)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    # orszag vizsgalata utan szetszedni (au, sch, de)
-                    #print(mygui.var.get())
-                    #print(posx, posy)
                     pos = pygame.mouse.get_pos()
-                    country.correct("Bregenz", pos, (54,371))
-                    #pygame.draw.circle(country.win, RED, pos, 5, 0)
-
+                    print(pos)
+                    if is_correct(pos, oe_cities[city][2][0], oe_cities[city][3][0]):
+                        pygame.draw.circle(country.win, GREEN, oe_cities[city][1][0], 5, 0)
+                        city = r.choice(range(2))
+                        text = font.render(oe_cities[city][0][0], True, BLACK)
+                        textRect = text.get_rect()
+                        textRect.center = (country.width / 2, 20)
+                    else:
+                        pygame.draw.circle(country.win, RED, oe_cities[city][1][0], 5, 0)
             if choice == 0:
                 run = False
             pygame.display.update()
